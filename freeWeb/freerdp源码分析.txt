@@ -1,0 +1,25 @@
+freerdp-client rdp通用客户端
+wfreerdp-client	和windows有关的客户端
+
+WinMain首先调用属于windows客户端的RdpClientEntry(&clientEntryPoints);
+然后调用属于通用客户端的context = freerdp_client_context_new(&clientEntryPoints);
+
+RdpClientEntry函数的两个回掉
+
+pEntryPoints->GlobalInit = wfreerdp_client_global_init;
+pEntryPoints->ClientNew = wfreerdp_client_new;
+
+
+wfreerdp_client_global_init会在freerdp_client_context_new里执行pEntryPoints->GlobalInit();
+里面调用
+freerdp_channels_global_init();
+freerdp_register_addin_provider(freerdp_channels_load_static_addin_entry, 0);
+
+
+pEntryPoints->ClientNew(instance, context);在函数freerdp_client_common_new中调用
+而在函数freerdp_client_context_new中有instance->ContextNew = freerdp_client_common_new;
+所以最终会在函数freerdp_context_new中调用IFCALL(instance->ContextNew, instance, instance->context);
+
+在函数wfreerdp_client_new中会调用
+wfreerdp_client_global_init();
+context->channels = freerdp_channels_new();

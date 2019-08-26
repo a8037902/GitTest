@@ -1,0 +1,155 @@
+配置环境
+vs 2013
+
+工程版本
+git clone --branch libpng15 https://github.com/glennrp/libpng.git
+http://www.zlib.net/fossils/zlib-1.2.5.tar.gz
+git clone https://github.com/GerHobbelt/pthread-win32.git
+git clone https://github.com/ambroff/casablanca.git
+git clone git://github.com/cloudbase/EHS.git
+git clone https://github.com/cloudbase/FreeRDP-dev.git
+git clone https://github.com/FreeRDP/FreeRDP-WebConnect.git 
+http://slproweb.com/download/Win32OpenSSL-1_0_2s.exe 
+https://jaist.dl.sourceforge.net/project/boost/boost-binaries/1.55.0/boost_1_55_0-msvc-12.0-32.exe
+
+一些配置路径
+D:/freeWeb/zlib-1.2.5
+D:/freeWeb/libpng/projects/vstudio/Debug/zlib.lib
+D:/freeWeb/libpng/projects/vstudio/Release/zlib.lib
+
+D:/freeWeb/pthread-win32
+D:/freeWeb/pthread-win32/bin/Win32_MSVC2013.Release
+
+D:/boost/boost_1_55_0
+D:/boost/boost_1_55_0/lib32-msvc-12.0/boost_filesystem-vc120-mt-gd-1_55.lib
+D:/boost/boost_1_55_0/lib32-msvc-12.0/boost_program_options-vc120-mt-gd-1_55.lib
+D:/boost/boost_1_55_0/lib32-msvc-12.0/boost_regex-vc120-mt-gd-1_55.lib
+D:/boost/boost_1_55_0/lib32-msvc-12.0/boost_system-vc120-mt-gd-1_55.lib
+
+
+FreeRDP-dev
+修改winpr\libwinpr\CMakeLists.txt
+#foreach(FILEPATH ${FILEPATHS})
+
+#	if(${FILEPATH} MATCHES "^([^/]*)//${FILENAME}")
+
+#		string(REGEX REPLACE "^([^/]*)//${FILENAME}" "\\1" ${MODULE_PREFIX}_SUBMODULE ${FILEPATH})
+
+#		set(${MODULE_PREFIX}_SUBMODULES ${${MODULE_PREFIX}_SUBMODULES} ${${MODULE_PREFIX}_SUBMODULE})
+
+#	endif()
+
+#endforeach(FILEPATH)
+
+
+#foreach(${MODULE_PREFIX}_SUBMODULE ${${MODULE_PREFIX}_SUBMODULES})
+
+#	add_subdirectory(${${MODULE_PREFIX}_SUBMODULE})
+
+#endforeach()
+
+
+
+add_subdirectory(asn1)
+
+add_subdirectory(bcrypt)
+
+add_subdirectory(com)
+
+add_subdirectory(credentials)
+
+add_subdirectory(credui)
+
+add_subdirectory(crt)
+
+add_subdirectory(crypto)
+
+add_subdirectory(dsparse)
+
+add_subdirectory(environment)
+
+add_subdirectory(error)
+
+add_subdirectory(file)
+
+add_subdirectory(handle)
+
+add_subdirectory(heap)
+
+add_subdirectory(input)
+
+add_subdirectory(interlocked)
+
+add_subdirectory(io)
+
+add_subdirectory(library)
+
+add_subdirectory(nt)
+
+add_subdirectory(path)
+
+add_subdirectory(pipe)
+
+add_subdirectory(pool)
+
+add_subdirectory(registry)
+
+add_subdirectory(rpc)
+
+add_subdirectory(security)
+
+add_subdirectory(sspi)
+
+add_subdirectory(sspicli)
+
+add_subdirectory(synch)
+
+add_subdirectory(sysinfo)
+
+add_subdirectory(thread)
+
+add_subdirectory(timezone)
+
+add_subdirectory(utils)
+
+add_subdirectory(winhttp)
+
+add_subdirectory(winsock)
+
+add_subdirectory(wtsapi)
+
+修改cmake\FindOpenSSL.cmake
+#list(GET OPENSSL_VERSION_LIST 0 OPENSSL_VERSION_MAJOR)
+    
+#list(GET OPENSSL_VERSION_LIST 1 OPENSSL_VERSION_MINOR)
+    
+#from_hex("${OPENSSL_VERSION_MINOR}" OPENSSL_VERSION_MINOR)
+    
+#list(GET OPENSSL_VERSION_LIST 2 OPENSSL_VERSION_FIX)
+    
+#from_hex("${OPENSSL_VERSION_FIX}" OPENSSL_VERSION_FIX)
+    
+#list(GET OPENSSL_VERSION_LIST 3 OPENSSL_VERSION_PATCH)
+	
+
+set(OPENSSL_VERSION_MAJOR "1")
+	
+set(OPENSSL_VERSION_MINOR "0")
+	
+set(OPENSSL_VERSION_FIX "2")
+
+set(OPENSSL_VERSION_FIX "s")
+
+修改winpr\libwinpr\interlocked\interlocked.c
+MyInterlockedCompareExchange64
+
+FreeRDP-WebConnect
+修改wsgate\cmake\FindFreeRDP.cmake
+set(FREERDP_LIBRARIES "D:/freeWeb/FreeRDP-dev/Release/freerdp-core.lib" "D:/freeWeb/FreeRDP-dev/Release/freerdp-codec.lib" "D:/freeWeb/FreeRDP-dev/Release/freerdp-gdi.lib" "D:/freeWeb/FreeRDP-dev/Release/freerdp-cache.lib" )
+
+修改wsgate\cmake\FindEHS.cmake
+set(EHS_INCLUDE_DIR "D:/freeWeb/EHS/include")
+
+启动命令
+wsgate.exe -c "../etc/wsgate.ini"
+访问地址https://127.0.0.1

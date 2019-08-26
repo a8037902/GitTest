@@ -425,10 +425,20 @@ wsgate.RDP = new Class( {
                         // this.log.debug('BMi:',(compressed ? ' C ' : ' U '),' x=',x,'y=',y,' w=',w,' h=',h,' l=',len);
                         var outB = this.cctx.createImageData(w, h);
                         if (compressed) {
-                            wsgate.dRLE16_RGBA(bmdata, len, w, outB.data);
+                            wsgate.dRLE24_RGBA(bmdata, len, w, outB.data);
                             wsgate.flipV(outB.data, w, h);
                         } else {
-                            wsgate.dRGB162RGBA(bmdata, len, outB.data);
+                            //wsgate.dRGB162RGBA(bmdata, len, outB.data);
+							var i=0,j=0;
+							while(len>0){
+								outB.data[i++]=bmdata[j+2];
+								outB.data[i++]=bmdata[j+1];
+								outB.data[i++]=bmdata[j];
+								outB.data[i++]=0xFF;
+								j+=3;
+								len-=3;
+							}
+							wsgate.flipV(outB.data, w, h);
                         }
                         this.cctx.putImageData(outB, x, y, 0, 0, dw, dh);
                     } else {
@@ -439,10 +449,20 @@ wsgate.RDP = new Class( {
 
                         var outB = this.bctx.createImageData(w, h);
                         if (compressed) {
-                            wsgate.dRLE16_RGBA(bmdata, len, w, outB.data);
+                            wsgate.dRLE24_RGBA(bmdata, len, w, outB.data);
                             wsgate.flipV(outB.data, w, h);
                         } else {
-                            wsgate.dRGB162RGBA(bmdata, len, outB.data);
+                            //wsgate.dRGB162RGBA(bmdata, len, outB.data);
+							var i=0,j=0;
+							while(len>0){
+								outB.data[i++]=bmdata[j+2];
+								outB.data[i++]=bmdata[j+1];
+								outB.data[i++]=bmdata[j];
+								outB.data[i++]=0xFF;
+								j+=3;
+								len-=3;
+							}
+							wsgate.flipV(outB.data, w, h);
                         }
                         this.bctx.putImageData(outB, 0, 0, 0, 0, dw, dh);
                         this.cctx.drawImage(this.bstore, 0, 0, dw, dh, x, y, dw, dh);
@@ -456,6 +476,14 @@ wsgate.RDP = new Class( {
                             //wsgate.flipV(outB.data, w, h);
                         } else {
                             //wsgate.dRGB162RGBA(bmdata, len, outB.data);
+							var i=0,j=0;
+							while(len>0){
+								outB.data[i++]=bmdata[j++];
+								outB.data[i++]=bmdata[j++];
+								outB.data[i++]=bmdata[j++];
+								outB.data[i++]=bmdata[j++];
+								len-=4;
+							}
                         }
                         this.cctx.putImageData(outB, x, y, 0, 0, dw, dh);
                     } else {
@@ -466,6 +494,14 @@ wsgate.RDP = new Class( {
                             //wsgate.flipV(outB.data, w, h);
                         } else {
                             //wsgate.dRGB162RGBA(bmdata, len, outB.data);
+							var i=0,j=0;
+							while(len>0){
+								outB.data[i++]=bmdata[j++];
+								outB.data[i++]=bmdata[j++];
+								outB.data[i++]=bmdata[j++];
+								outB.data[i++]=bmdata[j++];
+								len-=4;
+							}
                         }
                         this.bctx.putImageData(outB, 0, 0, 0, 0, dw, dh);
                         this.cctx.drawImage(this.bstore, 0, 0, dw, dh, x, y, dw, dh);
