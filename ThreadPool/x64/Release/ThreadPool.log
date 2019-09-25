@@ -1,0 +1,11 @@
+﻿  main.cpp
+  TaskBase.cpp
+  TaskTest.cpp
+  ThreadPool.cpp
+  正在生成代码
+  137 of 224 functions (61.2%) were compiled, the rest were copied from previous compilation.
+    123 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
+  已完成代码的生成
+  ThreadPool.vcxproj -> D:\vsWork\ThreadPool\x64\Release\ThreadPool.exe
+  ThreadPool.vcxproj -> D:\vsWork\ThreadPool\x64\Release\ThreadPool.pdb (Full PDB)
